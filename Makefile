@@ -1,3 +1,4 @@
+SHELL:=/bin/bash
 OBJS = \
 	console.o\
 	ioapic.o\
@@ -12,6 +13,7 @@ OBJS = \
 	trapasm.o\
 	trap.o\
 	vectors.o\
+	mouse.o\
 
 # Cross-compiling (e.g., on Mac OS X)
 # TOOLPREFIX = i386-jos-elf
@@ -141,8 +143,8 @@ QEMUOPTS = -drive file=xv6.img,index=0,media=disk,format=raw -smp $(CPUS) -m 512
 qemu: xv6.img
 	$(QEMU) -serial mon:stdio $(QEMUOPTS)
 
-qemu-autograde: xv6.img
-    $(QEMU) -nographic -serial mon:stdio $(QEMUOPTS)
+qemu-autograde: xv6.img 
+	$(QEMU) -nographic -serial mon:stdio $(QEMUOPTS)
 
 .gdbinit: .gdbinit.tmpl
 	sed "s/localhost:1234/localhost:$(GDBPORT)/" < $^ > $@

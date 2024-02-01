@@ -1,6 +1,8 @@
 #include "types.h"
 #include "defs.h"
 #include "x86.h"
+#include "traps.h"
+#include "mouse.h"
 
 extern char end[]; // first address after kernel loaded from ELF file
 
@@ -17,6 +19,7 @@ main(void)
   uartinit();      // serial port
   tvinit();        // trap vectors
   idtinit();       // load idt register
+  mouseinit();     // mouse
   sti();
   for(;;)
     wfi();
